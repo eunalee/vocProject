@@ -1,0 +1,141 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans:beans xmlns="http://www.springframework.org/schema/mvc"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xmlns:beans="http://www.springframework.org/schema/beans"
+	xmlns:context="http://www.springframework.org/schema/context"
+	xmlns:p="http://www.springframework.org/schema/p"
+	xsi:schemaLocation="http://www.springframework.org/schema/mvc http://www.springframework.org/schema/mvc/spring-mvc.xsd
+		http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd
+		http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context.xsd">
+
+	<!-- DispatcherServlet Context: defines this servlet's request-processing infrastructure -->
+	
+	<!-- Enables the Spring MVC @Controller programming model -->
+	<annotation-driven />
+
+	<!-- Handles HTTP GET requests for /resources/** by efficiently serving up static resources in the ${webappRoot}/resources directory -->
+	<resources mapping="/resources/**" location="/resources/" />
+	<resources mapping="/css/**" location="/css/" />
+	<resources mapping="/img/**" location="/img/" />
+	<resources mapping="/file/**" location="/file/" /> 
+
+	<!-- Resolves views selected for rendering by @Controllers to .jsp resources in the /WEB-INF/views directory -->
+	<beans:bean class="org.springframework.web.servlet.view.InternalResourceViewResolver">
+		<beans:property name="prefix" value="/WEB-INF/views/" />
+		<beans:property name="suffix" value=".jsp" />
+	</beans:bean>
+	
+	<context:component-scan base-package="com.bitcamp.voc" />
+	
+	<!-- @Transactional 애노테이션 활성화 설정 -->
+	<!-- <tx:annotation-driven transaction-manager="transactionManager"/> -->
+	
+	<!-- 파일업로드 처리를 위한 multipartResolver bean 등록 -->
+	<beans:bean id="multipartResolver"
+		class="org.springframework.web.multipart.commons.CommonsMultipartResolver">
+		<beans:property name="defaultEncoding">
+			<beans:value>utf-8</beans:value>
+		</beans:property>
+	</beans:bean>
+	
+	<!-- MySQL 연동 -->
+	<beans:bean
+	id="dataSource"
+	class="org.apache.commons.dbcp2.BasicDataSource"
+	p:driverClassName="com.mysql.jdbc.Driver"
+	p:url="jdbc:mysql://openproject.cbtptmkk8dep.ap-northeast-2.rds.amazonaws.com:3306/openproject?characterEncoding=utf8"
+	p:username="master"
+	p:password="11111111"
+	/>
+
+	<!-- 18/08/01 Mybatis 연동 설정 -->
+	<beans:bean id="sqlSessionFactoryBean" class="org.mybatis.spring.SqlSessionFactoryBean">
+		<beans:property name="dataSource" ref="dataSource" />
+		<beans:property name="mapperLocations" value="classpath:com/bitcamp/mapper/mybatis/*.xml" />
+	</beans:bean>
+	
+	<!-- 18/08/01 SesseionTemplate 클래스 등록 -->
+	<beans:bean id="sqlSession" class="org.mybatis.spring.SqlSessionTemplate">
+		<beans:constructor-arg ref="sqlSessionFactoryBean"/>  <!-- 생성자 필수 -->
+	</beans:bean>
+	
+	<!-- PlatformTransactionManager 빈 설정 -->
+	<beans:bean id="transactionManager" class="org.springframework.jdbc.datasource.DataSourceTransactionManager">
+	<beans:property name="dataSource" ref="dataSource" />
+	</beans:bean>
+
+	
+	<!-- 18/08/01 Service 빈 등록 -->
+	<beans:bean id="regiMemberService" class="com.bitcamp.Service.regiMemberService"/>
+	<beans:bean id="loginMemberService" class="com.bitcamp.Service.loginMemberService"/>
+	<beans:bean id="mypageMemberService" class="com.bitcamp.Service.mypageMemberService"/>
+	<beans:bean id="MemberListService" class="com.bitcamp.Service.MemberListService"/>
+	<beans:bean id="deleteMemberService" class="com.bitcamp.Service.deleteMemberService"/>
+	<beans:bean id="editMemberService" class="com.bitcamp.Service.editMemberService"/>
+	<beans:bean id="changePwdService" class="com.bitcamp.Service.changePwdService"/>
+	<beans:bean id="MailingService" class="com.bitcamp.Service.MailingService"/>
+	<beans:bean id="findIdService" class="com.bitcamp.Service.findIdService"/>
+	
+	<!-- 18/08/14 OrderService 빈 등록 -->
+	<beans:bean class="com.bitcamp.voc.order.service.OrderService" id="OrderService" />
+	
+	<!-- 18/08/13 네이버 로그인 빈 등록 -->
+	<beans:bean id="naverLoginBO" class="com.bitcamp.NaverLogin.NaverLoginBO"/>
+	<beans:bean id="JsonStringParse" class="com.bitcamp.NaverLogin.JsonStringParse"/>
+	
+	<!-- 18/08/10 Interceptor -->
+	<interceptors>
+		<interceptor>
+		<mapping path="/**"/>
+			<exclude-mapping path="/"/>
+			<exclude-mapping path="/indexHome"/>
+			<exclude-mapping path="/resources/**"/>
+			<exclude-mapping path="/css/**"/>
+			<exclude-mapping path="/img/**"/>
+			<exclude-mapping path="/member/login"/>
+			<exclude-mapping path="/member/regi"/>
+			<exclude-mapping path="/member/idcheck/**"/>
+			<exclude-mapping path="/member/pwd/FindTempPwd"/>
+			<exclude-mapping path="/member/id/FindId"/>
+			<exclude-mapping path="/member/naverlogin"/>
+			<exclude-mapping path="/member/naverCallback"/>
+			<exclude-mapping path="/product/**" />
+			<beans:bean class="com.bitcamp.Interceptor.AuthCheckInterceptor"></beans:bean>
+		</interceptor>
+	</interceptors>
+	
+	<!-- 18/08/10 메일 발송을 위한 JavaMailSenderImpl 빈 설정 -->
+    <beans:bean id="mailSender"
+        class="org.springframework.mail.javamail.JavaMailSenderImpl">
+        <beans:property name="host" value="smtp.gmail.com" />
+        <beans:property name="port" value="587" /><!-- 465 or 25 -->
+        <beans:property name="username" value="ryuinhye9501@gmail.com" />
+        <beans:property name="password" value="dangerouswlfkfak4885" />
+        <beans:property name="defaultEncoding" value="utf-8" />
+        <beans:property name="javaMailProperties">
+            <beans:props>
+                <beans:prop key="mail.transport.protocol">smtp</beans:prop>
+                <beans:prop key="mail.smtp.auth">true</beans:prop>
+                <beans:prop key="mail.smtp.starttls.enable">true</beans:prop>
+                <beans:prop key="mail.debug">true</beans:prop>
+            </beans:props>
+        </beans:property>
+    </beans:bean>
+    
+	<!-- 상품 목록 출력 서비스 -->
+	<beans:bean id="getProductListService" class="com.bitcamp.voc.product.service.GetProductListService" />
+	
+	<!-- 상품 등록 서비스 -->
+	<beans:bean id="registerProductService" class="com.bitcamp.voc.product.service.RegisterProductService" />
+	
+	<!-- 상품 수정 서비스 -->
+	<beans:bean id="editProductService" class="com.bitcamp.voc.product.service.EditProductService" />
+	
+	<!-- 상품 삭제 서비스 -->
+	<beans:bean id="deleteProductService" class="com.bitcamp.voc.product.service.DeleteProductService" />
+	
+	<!-- 게시판 빈 설정 -->	
+	<beans:bean id="boardDao" class="com.bitcamp.voc.bbs.BoardDao"/>
+	<beans:bean id="replyDao" class="com.bitcamp.voc.bbs.ReplyDao"/>
+
+</beans:beans>

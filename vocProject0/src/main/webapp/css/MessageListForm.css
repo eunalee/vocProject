@@ -1,0 +1,75 @@
+body {
+	margin: 0px;
+	background: #f5f6f7;
+}
+
+#containAll {
+	width: 500px;
+	height: 800px;
+	margin: 0 auto;
+}
+
+#containAll table{
+	width: 100%;
+	border: 1px solid gray;
+	background: white;
+	text-align: center;
+}
+
+#containAll table tr{
+	border: 1px solid gray;
+}
+
+#table{
+	margin: auto 0;
+}
+
+
+#writeBtn{
+			float: right;
+	        width: 80px;
+            height: 30px;
+            margin-top: 20px;
+            margin-bottom: 15px;
+ 
+            font-size: 13px;
+            color: #fff;
+            background: rgb(31, 188, 2);
+            border: none;
+            
+            cursor:pointer;
+}
+
+#deleteBtn{
+	        width: 80px;
+            height: 30px;
+            margin-top: 8px;
+            margin-bottom: 5px;
+ 
+            font-size: 13px;
+            color: #fff;
+            background: rgb(31, 188, 2);
+            border: none;
+            
+            cursor:pointer;
+}
+
+#writeBtn:hover, #deleteBtn:hover{
+	opacity: 0.8;
+}
+
+#index{
+	margin: auto 0;
+	text-align : center;
+}
+
+        
+#header{
+    text-align:center; 
+    color: #08a600;
+    font-size: 50px;
+    font-weight: bold;
+    margin-top: 10px;
+    margin-bottom: 0px;
+ 
+ }

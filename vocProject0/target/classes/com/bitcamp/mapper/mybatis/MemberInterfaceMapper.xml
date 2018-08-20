@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.bitcamp.Dao.MemberInterfaceDao">
+
+<insert id="memberInsert" parameterType="com.bitcamp.Model.Member">
+insert into voc_member (id, pwd, name, birth, gender, email, phone, zipcode, address, photo) values (#{id}, #{pwd}, #{name}, #{birth}, #{gender}, #{email}, #{phone}, #{zipcode} ,#{address}, #{photo})
+</insert>
+
+<select id="selectOneMember" resultType="com.bitcamp.Model.Member">
+select id, pwd, name, DATE_FORMAT(birth,'%Y-%m-%d') as birth , gender, email, phone, zipcode, address, photo, confirm, DATE_FORMAT(joindate,'%Y-%m-%d') as joindate from voc_member where id = #{id}
+</select>
+
+<select id="selectMemberList" resultType="com.bitcamp.Model.Member">
+select id, pwd, name, DATE_FORMAT(birth,'%Y-%m-%d') as birth , gender, email, phone, address, photo, confirm, DATE_FORMAT(joindate,'%Y-%m-%d') as joindate from voc_member
+</select>
+
+<select id="selectMemberListPage" resultType="com.bitcamp.Model.Member">
+select id, pwd, name, DATE_FORMAT(birth,'%Y-%m-%d') as birth , gender, email, phone, address, photo, confirm, DATE_FORMAT(joindate,'%Y-%m-%d') as joindate from voc_member limit #{firstRow}, #{endRow}
+</select>
+
+<select id="selectMemberCount" resultType="Integer">
+select count(*) from voc_member
+</select>
+
+<delete id="deleteMember" parameterType="com.bitcamp.Model.Member">
+delete from voc_member where id = #{id}
+</delete>
+
+<update id="editMember" parameterType="com.bitcamp.Model.Member">
+update voc_member set name = #{name}, birth = #{birth}, gender= #{gender}, email = #{email}, phone = #{phone}, zipcode = #{zipcode}, address = #{address}, photo = #{photo} where id = #{id}
+</update>
+
+<update id="updatePwd" parameterType="com.bitcamp.Model.Member" >
+update voc_member set pwd = #{pwd} where id = #{id}
+</update>
+
+<select id="selectOneMemberByName" resultType="com.bitcamp.Model.Member">
+select id, pwd, name, DATE_FORMAT(birth,'%Y-%m-%d') as birth , gender, email, phone, zipcode, address, photo, confirm, DATE_FORMAT(joindate,'%Y-%m-%d') as joindate from voc_member where name = #{name}
+</select>
+
+</mapper>

@@ -1,0 +1,181 @@
+@charset "UTF-8";
+
+body {
+	margin: 0px;
+	background: white;
+}
+
+#naver {
+	width: 768px;
+	margin: 0 auto;
+}
+
+#header img {
+	display: block;
+	width: 240px;
+	height: 44px;
+	padding: 64px 0 59px;
+	margin: 0 auto;
+}
+
+#container {
+	width: 460px;
+	margin: 0 auto;
+}
+
+#container label {
+	font-size: 14px;
+	font-weight: bold;
+	margin-top: 30px;
+}
+
+.box {
+	width: 438px;
+	background: rgb(255, 255, 255);
+	border: 1px solid rgb(218, 218, 218);
+	padding: 10px;
+	margin-top: 8px;
+	margin-bottom: 5px;
+}
+
+.input {
+	border: none;
+	width: 310px;
+	height: 30px;
+	padding: 0 3px;
+	font-size: 15px;
+}
+
+#idBox span {
+	font-family: Dotum;
+	font-weight: 100;
+	color: #8e8e8e;
+	padding-left: 15px;
+}
+
+#pwdBox img, #pwdCheckBox img {
+	float: right;
+	margin-right: 10px;
+	margin-top: 3px;
+}
+
+#pwdCheckBox {
+	margin-bottom: 5px;
+}
+
+#redCheck_pwdCheck {
+	margin-bottom: 30px;
+}
+
+#birth input {
+	font-size: 15px;
+	width: 116px;
+	height: 27px;
+	padding: 12px 15px;
+	margin: 8px 0;
+	background: rgb(255, 255, 255);
+	border: 1px solid rgb(218, 218, 218);
+	margin-bottom: 5px;
+}
+
+#birth input:nth-child(1) {
+	margin-right: 5px;
+}
+
+#birth select {
+	font-size: 15px;
+	width: 142px;
+	height: 54px;
+	margin-top: 8px;
+	margin-bottom: 5px;
+	margin-right: 5px;
+	background: rgb(255, 255, 255);
+	border: 1px solid rgb(218, 218, 218);
+	color: #8e8e8e;
+}
+
+.box1 {
+	overflow: hidden;
+}
+
+.gender-box>div {
+	width: 223px;
+	height: 50px;
+	background: white;
+	border: 1px solid #D9D9D9;
+	display: inline-block;
+	float: left;
+	text-align: center;
+	line-height: 50px;
+	color: grey;
+}
+
+#phoneBox {
+	margin: 10px 0;
+	width: 304px;
+}
+
+#phoneBox input {
+	color: #8e8e8e;
+}
+
+#send {
+	width: 100%;
+	height: 55px;
+	border: none;
+	font-size: 20px;
+	font-weight: normal;
+	color: #fff;
+	background: black;
+	margin-top: 10px;
+	cursor: pointer;
+}
+
+#footer {
+	margin: 0px;
+	margin-bottom: 10px;
+	padding: 0px;
+	text-align: center;
+}
+
+#footer ul {
+	padding: 0px;
+	margin-top: 30px;
+	margin-bottom: 9px;
+}
+
+#footer ul li {
+	list-style: none;
+	display: inline;
+}
+
+#footer ul li a {
+	text-decoration: none;
+	padding: 0 4px;
+	border-right: 1px solid #ccc;
+	font-size: 12px;
+	color: #333;
+}
+
+#footer img {
+	width: 63px;
+	margin-bottom: -4px;
+}
+
+#footer label {
+	font-size: 10px;
+	color: #333;
+}
+
+.redCheck {
+	font-size: 12px;
+	margin-top: 0px;
+	margin-bottom: 15px;
+}
+
+#photo {
+	width: 80px;
+	padding: 10px 0;
+	margin-top: 15px;
+	margin-bottom: 15px;
+}

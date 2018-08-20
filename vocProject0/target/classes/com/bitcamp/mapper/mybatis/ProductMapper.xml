@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.bitcamp.voc.product.dao.ProductDao">
+	<insert id="insert" parameterType="com.bitcamp.voc.product.model.ProductVO" useGeneratedKeys="true" keyProperty="productId">
+		insert into product 
+		values (#{productId}, #{productName}, #{productCategory}, #{productPrice}, #{productQuantity}, #{productMade}, #{productSale}, #{productImg}, #{productDesc}, now())
+	</insert>
+	
+	<select id="selectCount" resultType="int">
+		select count(*) from product
+	</select>
+	
+	<select id="selectAll" resultType="com.bitcamp.voc.product.model.ProductVO" parameterType="int">
+		select * from product 
+		limit #{firstRow}, #{endRow}
+	</select>
+	
+	<select id="selectCountByCategory" resultType="int">
+		select count(*) from product 
+		where productCategory=#{category}
+	</select>
+	
+ 	<select id="selectByCategory" resultType="com.bitcamp.voc.product.model.ProductVO">
+		select * from product 
+		where productCategory=#{category} 
+		limit #{firstRow}, #{endRow}
+	</select> 
+	
+	<select id="selectCountSearch" resultType="com.bitcamp.voc.product.model.ProductVO">
+		select count(*) from product 
+		where productCategory=#{category} 
+		and productRegDate between #{regDateFrom} and #{regDateTo}
+	</select>
+	
+ 	<select id="selectSearch" resultType="com.bitcamp.voc.product.model.ProductVO">
+		select * from product 
+		where productCategory=#{category} 
+		and productRegDate between #{regDateFrom} and #{regDateTo}
+	</select>
+	
+	<select id="selectById" resultType="com.bitcamp.voc.product.model.ProductVO">
+		select * from product 
+		where productId=#{id}
+	</select>
+	
+	<update id="update" parameterType="com.bitcamp.voc.product.model.ProductVO">
+		update product
+		set productName=#{productName}, productCategory=#{productCategory}, productPrice=#{productPrice}, productQuantity=#{productQuantity}, productMade=#{productMade}, productSale=#{productSale}, productImg=#{productImg}, productDesc=#{productDesc}
+		where productId=#{productId}
+	</update>
+	
+	<delete id="delete" parameterType="com.bitcamp.voc.product.model.ProductVO">
+		delete from product
+		where productId=#{productId}
+	</delete>
+</mapper>

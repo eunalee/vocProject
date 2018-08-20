@@ -1,0 +1,104 @@
+@charset "UTF-8";
+
+body {
+            margin: 0px;
+            background: #f5f6f7;
+        }
+        
+           #containAll {
+            width: 768px;
+            margin: 0 auto;
+        }
+ 
+ 
+        #header img {
+            display: block;
+            width: 240px;
+            height: 44px;
+            padding: 64px 0 59px;
+            margin-left: 264px;
+            margin-right: 164px;
+        }
+        
+        #container {
+/*             width: 1000px;
+            margin: 0 auto;
+            margin-right:0px; */
+        }
+        
+        #container>table{
+            background: white;
+            width: 100%;
+            height: 800;
+            border: 1px solid #gray;
+        }
+        
+        #container>table tr{
+           border-bottom: 2px solid #ccc; 
+           text-align: center;
+        }
+        
+         #container>table>tr th{
+           padding:20px;
+           font-size:20px;
+        }
+        
+        #container>table>tr td{
+           padding:20px;
+           font-size:20px;
+        }
+        
+        #container>h1{
+           text-align:center; 
+           color: #08a600;
+           font-size: 50px;
+           font-weight: bold;
+        
+        }
+        
+/*         #deleteBtn{
+            width: 60px;
+            height: 30px;
+            margin-top: 2px;
+            margin-bottom: 2px;
+ 
+            font-size: 10px;
+            color: #fff;
+            background: rgb(31, 188, 2);
+            border: none;
+            
+            cursor:pointer;
+        
+        } */
+        
+        #XMLBtn{
+			float: right;
+	        width: 80px;
+            height: 30px;
+            margin-top: 20px;
+            margin-bottom: 15px;
+            margin-left: 4px;
+ 
+            font-size: 13px;
+            color: #fff;
+            background: rgb(31, 188, 2);
+            border: none;
+            
+            cursor:pointer;
+}
+        
+         #homeBtn{
+            width: 100%;
+            height: 55px;
+            border: none;
+ 
+            font-size: 20px;
+            color: #fff;
+            background: rgb(31, 188, 2);
+ 
+            margin-top: 20px;
+            margin-bottom: 10px;
+            
+            cursor:pointer;
+        }
+        

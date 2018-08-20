@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" 
+	"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.bitcamp.voc.bbs.ReplyMapper">
+
+<select id="selectAll" resultType="com.bitcamp.voc.bbs.ReplyVo">
+select * from reply where num=#{num}
+</select>
+
+<select id="selectNum" resultType="com.bitcamp.voc.bbs.ReplyVo">
+select * from reply where cnum=#{cnum}
+</select>
+
+<insert id="insert" parameterType="com.bitcamp.voc.bbs.ReplyVo">
+insert into reply(name, regDate, memo, num) values(#{name}, CURRENT_TIMESTAMP, #{memo}, #{num})
+</insert>
+
+<delete id="delete">
+delete from reply where cnum=#{cnum}
+</delete>
+
+<delete id="deleteReply">
+delete from reply where num=#{num}
+</delete>
+
+<update id="modify">
+update reply set memo=#{memo} where cnum=#{cnum}
+</update>
+
+<select id="selectName" resultType="com.bitcamp.voc.bbs.ReplyVo">
+select name from reply where cnum=#{cnum}
+</select>
+
+</mapper>

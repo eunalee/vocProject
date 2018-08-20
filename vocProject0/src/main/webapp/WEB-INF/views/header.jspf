@@ -1,0 +1,126 @@
+<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
+<%@ page session="true" %>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %> 
+<% request.setCharacterEncoding("UTF-8"); %>
+
+<%
+	String id = (String)request.getSession(true).getAttribute("id");
+	String pwd = (String)request.getSession(true).getAttribute("pwd");
+%>
+
+<style>
+.title {
+	position: absolute;
+	right: 47.75%;
+	text-decoration: none;
+	color: black;
+	padding-top: 10px;
+}
+</style>
+
+<div class="title">
+<a href="/"><img style="width: 80px" src="/img/voc_logo.png"></a>
+</div>
+
+<div class="right">
+<a href="/adminLogin"><img style="width: 60px; float: right; margin: 15px" src="/img/setting.png"></a>
+<a href="/CartAction?index=select"><img style="width: 60px; float: right; margin: 15px" src="/img/cart.png"></a>
+<%if(id!=null){ %>
+<a href="/editProfile.jsp"><img style="width: 60px; float: right; margin: 15px" src="/img/member.png"></a>
+<%} %>
+</div>
+
+
+<div class="dropdown">
+	<button class="dropbtn">
+		<h1>
+			<i class="fa fa-bars"></i>
+		</h1>
+	</button>
+
+	<div class="dropdown-content">
+	   <%if(id!=null){ %>
+	    <a href ='/logout.jsp'>Logout</a>
+      <%}else{ %>	
+		 <a onclick="document.getElementById('id01').style.display='block'">Login</button>
+		 <a href="<c:url value='/member/regi'/>">회원가입</a>
+	  <%}%>
+		<a href="/ProductAction?index=selectAll&location=productlist.jsp&category=Cloth">Clothing</a> 
+		<a href="/ProductAction?index=selectAll&location=productlist.jsp&category=Living">Living</a> 
+		<a href="/ProductAction?index=selectAll&location=productlist.jsp&category=Tech">Tech</a>
+		<a href="/BoardAction?index=1">Review</a>
+		<a href="/BoardAction?index=2">Q&A</a>
+	</div>
+</div>
+
+
+<div id="id01" class="modal">
+
+	<form  action="/LoginAction" class="modal-content animate" onclick="return checkLogin()" method="post" style="width: 550px">
+		<!-- Cookie Check -->
+		<%
+			String idCookie = "";
+			Cookie cookies[] = request.getCookies();
+			if(cookies != null){
+				for(Cookie cookie : cookies){
+					if(cookie.getName().equals("cookie_id")){
+						idCookie = cookie.getValue();
+					}
+				}
+			}	
+		%>
+		<div class="container" >
+			<label for="uname"> <b>ID</b>
+			</label> <input type="text" placeholder="ID" name="id" value="<%=idCookie%>" required>
+
+			<label for="psw"> <b>비밀번호</b>
+			</label> <input type="password" placeholder="Password" name="pwd" required>
+
+			<button type="submit" class="loginbtn">로그인</button>
+			<label class="rem"> <input type="checkbox" checked="checked"
+				name="remember"> Remember me
+			</label> <span class="psw" ; style="line-height: 50%"><a href="#"> Forgot password?</a>
+			</span>
+
+		</div>
+
+		<div class="container" style="background-color: #f1f1f1">
+			<button type="button"
+				onclick="document.getElementById('id01').style.display='none'"
+				class="cancelbtn">Cancel</button>
+			<button type="button" class="joinbtn" style="" onclick="location.href='registerForm.jsp'"><a>Join</a>
+			</button>
+		</div>
+	</form>
+
+	<script>
+		// Get the modal
+		var modal = document.getElementById('id01');
+		var modal2 = document.getElementById('id02');
+		// When the user clicks anywhere outside of the modal, close it
+		window.onclick = function(event) {
+			if (event.target == modal) {
+				modal.style.display = "none";
+			}
+		}
+
+		window.onclick = function(event) {
+			if (event.target == modal2) {
+
+			}
+		}
+		
+		function checkLogin(){
+	    	if(!document.userInfo.id.value ){
+	    		alert("아이디를 입력해주세요");
+	    		return false;
+	    	}
+	    	
+	    	if(!document.userInfo.pwd.value){
+	    		alert("비밀번호를 입력해주세요");
+	    	    return false;
+	    	}
+		}
+
+	</script>
+</div>

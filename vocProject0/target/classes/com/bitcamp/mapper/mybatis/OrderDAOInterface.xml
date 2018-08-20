@@ -1,0 +1,132 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+	PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+	"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.bitcamp.voc.order.dao.OrderDAOInterface">
+
+	<insert id="insertOrder"
+		parameterType="com.bitcamp.voc.order.model.OrderVO"
+		useGeneratedKeys="true" keyProperty="orderNumber">
+		INSERT INTO
+		openproject.order
+		(
+		memberID,
+		orderTotal,
+		orderAddress,
+		orderPhone,
+		orderOption,
+		orderPay
+		)
+		VALUES
+		(
+		#{memberID},
+		#{orderTotal},
+		#{orderAddress},
+		#{orderPhone},
+		#{orderOption},
+		#{orderPay}
+		)
+	</insert>
+	
+	<insert id="insertOrderItems"
+		parameterType="com.bitcamp.voc.order.model.ProductVO">
+		INSERT INTO
+		openproject.orderItem
+		(
+		orderNumber,
+		productKey,
+		productQuantity,
+		productPrice,
+		productOption
+		)
+		VALUES
+		(
+		#{orderNumber},
+		#{productKey},
+		#{productQuantity},
+		#{productPrice},
+		#{productOption}
+		)
+	</insert>
+	
+	<select id="selectOrderItems" resultType="com.bitcamp.voc.order.model.OrderVO">
+		select * from openproject.order ORDER BY orderNumber DESC LIMIT ${param2},${param1}
+		<!-- <where>
+			<choose>
+				<when test="keyword.equals('member') ">memberNumber = ${search}</when>
+				<when test="keyword.equals('status') ">orderStatus = ${search}</when>
+			</choose>
+			ORDER BY DESC LIMIT ${fromPage},${perPage}
+		</where> -->
+	</select>
+	
+	<select id="selectOrderItemsBy" parameterType="HashMap" resultType="com.bitcamp.voc.order.model.OrderVO">
+		select * from openproject.order
+		<where>
+			<choose>
+				<when test="keyword.equals('zero') ">orderStatus = 0</when>
+				<when test="keyword.equals('one') ">orderStatus = 1</when>
+				<when test	="keyword.equals('two') ">orderStatus = 2</when>
+				<when test	="keyword.equals('three') ">orderStatus = 3</when>
+				<when test	="keyword.equals('four') ">orderStatus = 4</when>
+				<when test	="keyword.equals('five') ">orderStatus = 5</when>
+				<when test	="keyword.equals('six') ">orderStatus = 6</when>
+			</choose>
+			<if test="!memberID.equals('ALL')">and memberID = '${memberID}'</if>
+			and orderDate &gt; '${orderDateFrom}' and orderDate &lt; '${orderDateTo}'	
+		</where>
+			ORDER BY orderNumber DESC LIMIT ${pageNumber},${perPage}
+	</select>
+	
+	<select id="selectOrderItemsByOrderNumber" resultType="com.bitcamp.voc.order.model.ProductVO">
+		select * from openproject.orderItem 
+		<where>
+		orderNumber = #{orderNumber}
+		</where>
+	</select>
+	
+	<select id="selectOrderByNumber" resultType="com.bitcamp.voc.order.model.OrderVO">
+		select * from openproject.order
+		<where>
+			orderNumber = #{orderNumber}
+		</where>
+	</select>
+	
+	<update id="updateOrderStatus" parameterType="HashMap">
+		update openproject.order
+		<set>
+		orderStatus = orderStatus +1, orderDelivery = #{orderDelivery}
+		</set>
+		<where>
+		orderNumber = #{orderNumber}
+		</where>
+	</update>
+	
+	<update id="updateOrderRefund">
+		update openproject.order
+		<set>
+		orderStatus = 5
+		</set>
+		<where>
+		orderNumber = #{orderNumber}
+		</where>
+	</update>
+	
+	<select id="selectOrderCount" parameterType="HashMap" resultType="int">
+		select count(*) from openproject.order
+		<where>
+			<choose>
+				<when test="keyword.equals('zero') ">orderStatus = 0</when>
+				<when test="keyword.equals('one') ">orderStatus = 1</when>
+				<when test	="keyword.equals('two') ">orderStatus = 2</when>
+				<when test	="keyword.equals('three') ">orderStatus = 3</when>
+				<when test	="keyword.equals('four') ">orderStatus = 4</when>
+				<when test	="keyword.equals('five') ">orderStatus = 5</when>
+				<when test	="keyword.equals('six') ">orderStatus = 6</when>
+			</choose>
+			<if test="!memberID.equals('ALL')">and memberID = '${memberID}'</if>
+			and orderDate &gt; '${orderDateFrom}' and orderDate &lt; '${orderDateTo}'	
+		</where>
+	</select>
+</mapper>
